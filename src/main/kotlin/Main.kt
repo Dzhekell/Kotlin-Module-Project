@@ -1,3 +1,5 @@
 fun main(args: Array<String>) {
-    println("Hello World!")
+    MenuLogic.mainMenu()
+    val archivesMenu: ArchivesMenu = ArchivesMenu()
+    archivesMenu.showMenu()
 }
