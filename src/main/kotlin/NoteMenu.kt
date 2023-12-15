@@ -1,8 +1,9 @@
-class NoteMenu() {
-    var lastNumber: Int = 0
+class NoteMenu {
+    private var numberOfNotes: Int = 0
 
         fun showNoteMenu(archive: Archive) {
             while (true) {
+                var lastNumber = 0
                 println("0. Создать заметку")
                 for (key in archive.noteMap.keys) {
                     val number: Int = key
@@ -12,7 +13,7 @@ class NoteMenu() {
                 }
                 lastNumber += 1
                 println("${lastNumber}. Выход")
-                var command: Int = 0
+                var command: Int
                 while (true) {
                     val answer: Int = MenuLogic.getUserAnswer()
                     if (answer > lastNumber) {
@@ -25,8 +26,17 @@ class NoteMenu() {
                     }
                 }
                 if (command == 0) {
-                    println("Введите имя заметки:")
-                    newNote(MenuLogic.getObjectName(), archive)
+                    var noteName: String
+                    while (true) {
+                        println("Введите имя заметки:")
+                        noteName = MenuLogic.getObjectName()
+                        if (noteName.equals("") or noteName.equals(" ")) {
+                            println("Имя заметки не может быть пустым! Попробуйте снова.")
+                        } else {
+                            break
+                        }
+                    }
+                    newNote(noteName, archive)
                 } else if (command == lastNumber) {
                     return
                 } else {
@@ -37,13 +47,21 @@ class NoteMenu() {
         }
 
         fun newNote(name: String, archive: Archive) {
-           val newNote = Note(name)
-           println("Введите текст заметки:")
-           val text: String = MenuLogic.getObjectName()
-            val currentNumber: Int = lastNumber + 1
-            newNote.text = text
-           archive.noteMap.put(currentNumber, newNote)
-            lastNumber = currentNumber
+            val newNote = Note(name)
+            var text: String
+            while (true) {
+
+                println("Введите текст заметки:")
+                text = MenuLogic.getObjectName()
+                if (text.equals("")  or text.equals(" ")) {
+                    println("Текст заметки не может быть пустым! Попробуйте снова.")
+                } else {
+                    break
+                }                }
+                val currentNumber: Int = numberOfNotes + 1
+                newNote.text = text
+                archive.noteMap.put(currentNumber, newNote)
+                numberOfNotes = currentNumber
         }
 
         fun readNote(note: Note) {

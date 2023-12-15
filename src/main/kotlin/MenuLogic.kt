@@ -1,8 +1,6 @@
 import java.util.Scanner
 
 class MenuLogic<T> {
-
-
     companion object {
         fun mainMenu() {
             println("Добро пожаловать в приложение \"Заметки\". Пожалуйста, выберете нужный пункт:")

@@ -3,7 +3,7 @@ class ArchivesMenu {
     var numberOfArchives: Int = 0
 
     private fun newArchive(name: String) {
-        val newArchive: Archive = Archive(name)
+        val newArchive = Archive(name)
         val currentNumber: Int = numberOfArchives + 1
         archivesMap.put(currentNumber, newArchive)
         numberOfArchives = currentNumber
@@ -12,7 +12,7 @@ class ArchivesMenu {
     fun showMenu() {
         while (true) {
             println("Список архивов:")
-            var lastNumber: Int = 0
+            var lastNumber = 0
             println("0. Создать архив")
             for (key in archivesMap.keys) {
                 val str: Archive? = archivesMap.get(key)
@@ -23,7 +23,7 @@ class ArchivesMenu {
             }
             lastNumber += 1
             println("${lastNumber}. Выход")
-            var command: Int = 0
+            var command: Int
             while (true) {
                 val answer: Int = MenuLogic.getUserAnswer()
                 if (answer > lastNumber) {
@@ -36,13 +36,22 @@ class ArchivesMenu {
                 }
             }
             if (command == 0) {
-                println("Введите имя архива:")
-                newArchive(MenuLogic.getObjectName())
+                var archiveName: String
+                while (true) {
+                    println("Введите имя архива:")
+                    archiveName = MenuLogic.getObjectName()
+                    if (archiveName.equals("") or archiveName.equals(" ")) {
+                        println("Имя архива не может быть пустым! Попробуйте снова.")
+                    } else {
+                        break
+                    }
+                }
+                newArchive(archiveName)
             } else if (command == lastNumber) {
                 return
             } else {
                 val neededArchive: Archive = archivesMap.get(command)!!
-                val noteMenu: NoteMenu = NoteMenu()
+                val noteMenu = NoteMenu()
                 noteMenu.showNoteMenu(neededArchive)
             }
         }
